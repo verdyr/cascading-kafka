@@ -42,6 +42,10 @@ public class Main
     String kafkaOutPath = args[ 2 ]; // <Kafka Source Topics path>
     String url = args[ 3 ]; // "http://ap-hdpen101t.oneadr.net:kafkaPort"
     long jobId = Long.parseLong( args[ 4 ] ); // <Kafka Topic ID>
+    String zooKeeper = args[ 5 ];
+    String groupId = args[ 6 ];
+    String topic = args[ 7 ];
+    int threads = Integer.parseInt( args[ 8 ] );
 
 
     // create the source tap for <Input file>
@@ -67,7 +71,10 @@ public class Main
       new KafkaRiffle( Collections.unmodifiableCollection( Arrays.asList( outTap ) ),
         kafkaOutTap,
         url,
-        jobId ) );
+        jobId,
+	zk,
+	groupId,
+	topic ) );
 
     // Now connecting regular flow, dataPrepFlow that copies HDFS file
     Flow dataPrepFlow = flowConnector.connect( flowDef );
