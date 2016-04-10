@@ -1,0 +1,48 @@
+
+archivesBaseName = 'cascading-kafka'
+group = 'cascading-kafka'
+
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+  }
+}
+
+
+repositories {
+  mavenCentral()
+  maven { url 'http://conjars.org/repo/' }
+}
+
+ext.cascadingVersion = '3.0.1'
+ext.hadoopVersion = '2.6.0'
+ext.sqoopVersion = '1.99.6'
+ext.kafkaVersion = '0.9.0.1'
+
+dependencies {
+  compile group: 'org.apache.sqoop', name: 'sqoop-client', version: sqoopVersion
+  compile group: 'cascading', name: 'cascading-core', version: cascadingVersion
+  compile group: 'cascading', name: 'cascading-local', version: cascadingVersion
+  compile group: 'cascading', name: 'cascading-hadoop2-mr1', version: cascadingVersion
+  compile group: 'org.apache.sqoop.connector', name: 'sqoop-connector-hdfs', version: sqoopVersion
+  compile group: 'org.apache.kafka', name: 'kafka_2.11', version: kafkaVersion
+
+  provided group: 'org.apache.hadoop', name: 'hadoop-common', version: hadoopVersion
+  provided group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client', version: hadoopVersion
+  provided group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: hadoopVersion
+}
+
+jar {
+  description = "Assembles a Hadoop ready jar file"
+  doFirst {
+    into( 'lib' ) {
+      from { configurations.compile.minus( [configurations.provided] ) }
+    }
+  }
+
+  manifest {
+    attributes( "Main-Class": "gfm/kafka/Main" )
+  }
+}
