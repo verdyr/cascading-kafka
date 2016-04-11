@@ -40,7 +40,7 @@ public class Main
     String inPath = args[ 0 ]; // <Input file>
     String outPath = args[ 1 ]; // <Output file>
     String kafkaOutPath = args[ 2 ]; // <Kafka Source Topics path>
-    String url = args[ 3 ]; // "http://ap-hdpen101t.oneadr.net:kafkaPort"
+    String url = args[ 3 ]; // "http://hostname:kafkaPort"
     long jobId = Long.parseLong( args[ 4 ] ); // <Kafka Topic ID>
     String zooKeeper = args[ 5 ];
     String groupId = args[ 6 ];
